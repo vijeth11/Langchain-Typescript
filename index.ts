@@ -16,7 +16,8 @@ import { removeToolMessageAgent } from "./middleware-example/remove-tool-message
 import { emailSendingAgentWithHumanInLoop } from "./middleware-example/human-in-loop";
 import { generateImagesBasedOnDescription } from "./image-generation-edit/image-genration-agent";
 import { dynamicModalAgentAndUserLanguage } from "./middleware-example/dynamic-modal-agent";
-import { getDataFromRAGAgent } from "./RAG/SingleQueryRag/ragAgent";
+import { SingleQueryRAGAgent } from "./RAG/Query Type Agents/SingleQueryAgent";
+import { decompositionQueryAndRetrieveData } from "./RAG/Query Type Agents/DecompositionQueryAgent";
 dotenv.config();
 
 async function main() {
@@ -97,9 +98,12 @@ async function main() {
   //await dynamicModalAgentAndUserLanguage();
 
   // Example of using RAG to retrieve information from a vector store and answer user queries based on the retrieved context.
-  const inputMessage = `What is the standard method for Task Decomposition?
-        Once you get the answer, look up common extensions of that method.`;
-  await getDataFromRAGAgent(inputMessage);
+  // const inputMessage = `What is the standard method for Task Decomposition? Once you get the answer, look up common extensions of that method.`;
+  // await SingleQueryRAGAgent(inputMessage);
+
+  // Example of using RAG with multiple queries to retrieve information from a vector store and answer user queries based on the retrieved context. In this example, we are generating multiple queries from the original user query to overcome some of the limitations of distance-based similarity search in vector databases.
+  const inputMessage = `What is task decomposition for LLM agents??`;
+  await decompositionQueryAndRetrieveData(inputMessage);
 
 }
 
