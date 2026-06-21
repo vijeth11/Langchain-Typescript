@@ -16,6 +16,7 @@ import { removeToolMessageAgent } from "./middleware-example/remove-tool-message
 import { emailSendingAgentWithHumanInLoop } from "./middleware-example/human-in-loop";
 import { generateImagesBasedOnDescription } from "./image-generation-edit/image-genration-agent";
 import { dynamicModalAgentAndUserLanguage } from "./middleware-example/dynamic-modal-agent";
+import { getDataFromRAGAgent } from "./RAG/SingleQueryRag/ragAgent";
 dotenv.config();
 
 async function main() {
@@ -93,7 +94,13 @@ async function main() {
 
   // Example of dynamic model selection and dynamic system prompt based on the conversation context using middleware. 
   // In this example, we are changing the system prompt based on the user's preferred language and also switching between different models based on the length of the conversation history.
-  await dynamicModalAgentAndUserLanguage();
+  //await dynamicModalAgentAndUserLanguage();
+
+  // Example of using RAG to retrieve information from a vector store and answer user queries based on the retrieved context.
+  const inputMessage = `What is the standard method for Task Decomposition?
+        Once you get the answer, look up common extensions of that method.`;
+  await getDataFromRAGAgent(inputMessage);
+
 }
 
 main().catch((err) => {

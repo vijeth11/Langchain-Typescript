@@ -27,6 +27,7 @@ A comprehensive TypeScript project demonstrating how to build AI agents using La
 - **Middleware Support**: Customize agent behavior with middleware (summarization, message filtering, dynamic model selection)
 - **Human-in-the-Loop**: Integrate human approval/interaction in agent workflows
 - **Image Generation**: Generate images using MCP-based models
+- **Retrieval Augmented Generation (RAG)**: Query vector stores and answer based on retrieved context
 - **Context State Management**: Maintain and update user context across conversations
 - **MCP Integration**: Model Context Protocol support for enhanced functionality
 
@@ -42,6 +43,7 @@ A comprehensive TypeScript project demonstrating how to build AI agents using La
 ## 🚀 Installation
 
 1. **Clone the repository**:
+
    ```bash
    git clone <repository-url>
    cd first-ai-agent-using-openai-ts-langchain
@@ -112,48 +114,66 @@ TAVILY_API_KEY=your_tavily_api_key_here
 ├── mcp/                              # Model Context Protocol examples
 │   └── langchain_mcp.ts             # Flight booking agent with MCP
 │
+├── RAG/                              # Retrieval-augmented generation examples
+│   └── SingleQueryRag/
+│       ├── fetchDocument.ts
+│       ├── ragAgent.ts
+│       ├── ragIndexingAndVectorisation.ts
+│       └── retrival-tool.ts
 └── utils/                            # Utility functions
 ```
 
 ## 💡 Examples
 
 ### 1. Simple Chat
+
 Basic agent chat interaction with OpenAI:
+
 ```typescript
 await simpleChatWithAgent(agent);
 ```
 
 ### 2. Few-Shot Prompting
+
 Demonstrate few-shot learning with examples:
+
 ```typescript
 await fewShotPrompt("What's the capital of France?");
 ```
 
 ### 3. Structured Responses
+
 Generate validated structured output:
+
 ```typescript
 await structuredPrompt(question);
 await structuredOutputPrompt(question);
 ```
 
 ### 4. Web Search Tool
+
 Enable agents to search the web using Tavily:
+
 ```typescript
 await searchTheWeb("Who is the current Mayor of Boston?");
 ```
 
 ### 5. Memory Management
+
 Maintain conversation history and context:
+
 ```typescript
 await shortMemoryExample([
-    "Hello my name is John. My favorite color is blue.",
-    "What is my name?",
-    "What is my favorite color?"
+  "Hello my name is John. My favorite color is blue.",
+  "What is my name?",
+  "What is my favorite color?",
 ]);
 ```
 
 ### 6. Multi-Agent System
+
 Orchestrate multiple agents:
+
 ```typescript
 await multiAgentExample();
 ```
@@ -161,39 +181,51 @@ await multiAgentExample();
 ### 7. Middleware Examples
 
 **Message Summarization**:
+
 ```typescript
 await summariseMessagesAgent(messages, question);
 ```
 
 **Remove Tool Messages**:
+
 ```typescript
 await removeToolMessageAgent(messages, question);
 ```
 
 **Human-in-the-Loop**:
+
 ```typescript
-await emailSendingAgentWithHumanInLoop(["Please read my email and send a response."]);
+await emailSendingAgentWithHumanInLoop([
+  "Please read my email and send a response.",
+]);
 ```
 
 **Dynamic Model & Language Support**:
+
 ```typescript
 await dynamicModalAgentAndUserLanguage();
 ```
 
 ### 8. Image Generation
+
 Generate images with MCP:
+
 ```typescript
 await generateImagesBasedOnDescription("A sunset over mountains", "output.png");
 ```
 
 ### 9. MCP Integration
+
 Use Model Context Protocol for advanced features:
+
 ```typescript
 await flightBookingAgent();
 ```
 
 ### 10. Context State Management
+
 Persist user preferences:
+
 ```typescript
 await getMyFaviourateColor();
 await setMyFaviourateColor();
@@ -201,12 +233,35 @@ await setMyFaviourateColor();
 
 ## 🏃 Getting Started
 
-1. **Set up your environment variables** (see [Environment Setup](#environment-setup))
+1. **Set up your environment variables** (see [Environment Setup](#environment-setup)).
 
-2. **Open `index.ts`** and uncomment the example you want to run:
+2. **Open `index.ts`** and uncomment the example you want to run. The current `main()` function imports several examples and is set up to run the RAG example by default.
+
    ```typescript
-   // Example: uncomment the line for the example you want to test
-   await simpleChatWithAgent(agent);
+   // Example: run the RAG example
+   const inputMessage = `What is the standard method for Task Decomposition?
+         Once you get the answer, look up common extensions of that method.`;
+   await getDataFromRAGAgent(inputMessage);
+   ```
+
+   Or switch to another example by uncommenting one of these calls:
+
+   ```typescript
+   // await simpleChatWithAgent(agent);
+   // await fewShotPrompt(question);
+   // await structuredPrompt(question);
+   // await structuredOutputPrompt(question);
+   // await searchTheWeb("Who is the current Mayor of Boston?");
+   // await shortMemoryExample([...]);
+   // await flightBookingAgent();
+   // await getMyFaviourateColor();
+   // await setMyFaviourateColor();
+   // await multiAgentExample();
+   // await summariseMessagesAgent([...], "your question");
+   // await removeToolMessageAgent([...], "your question");
+   // await emailSendingAgentWithHumanInLoop(["Please read my email and send a response."]);
+   // await generateImagesBasedOnDescription("A sunset over mountains", "output.png");
+   // await dynamicModalAgentAndUserLanguage();
    ```
 
 3. **Run the project**:
@@ -216,33 +271,40 @@ await setMyFaviourateColor();
 
 ## 📝 Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Run the main application using tsx |
-| `npm test` | Run tests (currently not configured) |
+| Command     | Description                          |
+| ----------- | ------------------------------------ |
+| `npm start` | Run the main application using tsx   |
+| `npm test`  | Run tests (currently not configured) |
 
 ## 📦 Dependencies
 
 ### Core Dependencies
+
+- **@langchain/classic** (^1.0.36): Classic agents and utilities for LangChain
 - **@langchain/core** (^1.1.30): Core LangChain functionality
 - **@langchain/openai** (^1.2.12): OpenAI integration
 - **@langchain/google-genai** (^2.1.31): Google Generative AI integration
 - **@langchain/google-vertexai** (^2.1.31): Google Vertex AI integration
 - **@langchain/langgraph** (^1.3.2): Graph-based agent orchestration
 - **@langchain/mcp-adapters** (^1.1.3): Model Context Protocol adapters
+- **@langchain/textsplitters** (^1.0.1): Text splitting utilities for embeddings and RAG
 - **langchain** (^1.2.29): Main LangChain library
 - **@tavily/core** (^0.7.2): Web search tool
+- **cheerio** (^1.2.0): HTML parsing for web scraping or tool results
 - **fastmcp** (^4.0.1): Fast MCP server
 - **dotenv** (^17.4.1): Environment variable management
 - **zod** (^4.3.6): Schema validation and parsing
 
 ### Dev Dependencies
+
 - **@types/node** (^25.3.3): TypeScript types for Node.js
 
 ## 🔧 Configuration
 
 ### TypeScript Configuration
+
 The project uses TypeScript with the following key settings:
+
 - Target: ES2020
 - Module: CommonJS
 - Strict mode enabled
@@ -289,16 +351,19 @@ ISC License - Feel free to use this project for learning and development purpose
 ## ❓ Troubleshooting
 
 ### Missing Dependencies
+
 ```bash
 npm install
 ```
 
 ### TypeScript Errors
+
 ```bash
 npm run build
 ```
 
 ### API Key Issues
+
 - Verify all required environment variables are set in `.env`
 - Ensure API keys are valid and have appropriate permissions
 - Check API quota limits
