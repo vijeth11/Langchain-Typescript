@@ -18,6 +18,7 @@ import { generateImagesBasedOnDescription } from "./image-generation-edit/image-
 import { dynamicModalAgentAndUserLanguage } from "./middleware-example/dynamic-modal-agent";
 import { SingleQueryRAGAgent } from "./RAG/Query Type Agents/SingleQueryAgent";
 import { decompositionQueryAndRetrieveData } from "./RAG/Query Type Agents/DecompositionQueryAgent";
+import { decompositionQueryAndRetrieveAnswer } from "./RAG/Query Type Agents/DcompositionAnswer";
 dotenv.config();
 
 async function main() {
@@ -102,9 +103,14 @@ async function main() {
   // await SingleQueryRAGAgent(inputMessage);
 
   // Example of using RAG with multiple queries to retrieve information from a vector store and answer user queries based on the retrieved context. In this example, we are generating multiple queries from the original user query to overcome some of the limitations of distance-based similarity search in vector databases.
-  const inputMessage = `What is task decomposition for LLM agents??`;
-  await decompositionQueryAndRetrieveData(inputMessage);
+  // const inputMessage = `What is task decomposition for LLM agents?`;
+  // await decompositionQueryAndRetrieveData(inputMessage);
 
+  // Example of using RAG with multiple queries and answers from the vector store. In this example, we are generating multiple queries from the original user query to overcome some of the limitations of distance-based similarity search in vector databases.
+  // const inputMessage = "What are the main components of an LLM-powered autonomous agent system?";
+  // await decompositionQueryAndRetrieveAnswer(inputMessage);
+
+  
 }
 
 main().catch((err) => {
