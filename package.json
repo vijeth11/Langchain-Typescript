@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@langchain/classic": "^1.0.36",
+    "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.1.30",
     "@langchain/google-genai": "^2.1.31",
     "@langchain/google-vertexai": "^2.1.31",
@@ -23,6 +24,7 @@
     "dotenv": "^17.4.1",
     "fastmcp": "^4.0.1",
     "langchain": "^1.2.29",
+    "neo4j-driver": "^6.2.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

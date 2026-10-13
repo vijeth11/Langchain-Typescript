@@ -7,6 +7,7 @@ import {
 } from "langchain";
 import { MemorySaver } from "@langchain/langgraph";
 import z from "zod";
+import { ChatOpenAI } from "@langchain/openai";
 export async function generateAgent(systemPrompt: string = "") {
   // Example of configuring a model and assigning it to an agent
   //const model = await initChatModel("gpt-5-nano", { temperature: 1 });
@@ -115,4 +116,8 @@ export async function generateAgentWithMiddlewareAndState(
     stateSchema: contextState,
   });
   return agent;
+}
+
+export async function getModel(){
+  return new ChatOpenAI({temperature: 1, modelName: "gpt-5-nano"});
 }

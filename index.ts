@@ -19,6 +19,7 @@ import { dynamicModalAgentAndUserLanguage } from "./middleware-example/dynamic-m
 import { SingleQueryRAGAgent } from "./RAG/Query Type Agents/SingleQueryAgent";
 import { decompositionQueryAndRetrieveData } from "./RAG/Query Type Agents/DecompositionQueryAgent";
 import { decompositionQueryAndRetrieveAnswer } from "./RAG/Query Type Agents/DcompositionAnswer";
+import { movieDatabaseAgent } from "./knowledge graph/movie-agent";
 dotenv.config();
 
 async function main() {
@@ -110,7 +111,10 @@ async function main() {
   // const inputMessage = "What are the main components of an LLM-powered autonomous agent system?";
   // await decompositionQueryAndRetrieveAnswer(inputMessage);
 
-  
+  // Example of using RAG with a knowledge graph to answer user queries based on the retrieved context. In this example, we are using a Neo4j graph database to store and retrieve information about movies.
+  const inputMessage = "Who directed the movie Jumanji ?";
+  const response = await movieDatabaseAgent(inputMessage);
+  console.log("Response from Neo4j graph database:", response.result);
 }
 
 main().catch((err) => {
